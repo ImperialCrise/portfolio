@@ -20,8 +20,8 @@ jobs:
         git fetch origin
         git reset --hard origin/main
         git pull
-        npm install
-        npm export
+        npm install --legacy-peer-deps
+        npm run export
         sudo mkdir -p /var/www/privilegedlab.com/emre
         sudo rsync -av --delete ./out/ /var/www/privilegedlab.com/emre/
         sudo chown -R www-data:www-data /var/www/privilegedlab.com/emre/
