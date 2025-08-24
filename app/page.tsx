@@ -87,7 +87,7 @@ const dateTranslations = {
 const translations = {
   en: {
     // Hero section
-    student: "4th-Year Computer Engineering Student at EPITA",
+    student: "AI Back-End Software Engineer",
     specializing: "Specializing in Machine Learning & AI",
     // Education section
     education: "Education",
@@ -96,12 +96,12 @@ const translations = {
     exchangeSemester: "Academic Exchange Semester",
     // Experience section
     experience: "Professional Experience",
-    ministry: "Ministry of the Armed Forces",
-    pfeeProject: "PFEE Project – Development of a Multimodal Data Pipeline",
-    pipeline: "Implemented a pipeline for generating and annotating multimodal datasets",
-    fineTuned:
-      "Fine-tuned and benchmarked multimodal models, optimized hyperparameters, and evaluated performance gains",
-    aiBackend: "AI Back-end Engineer Intern",
+    thomsonComputing: "Thomson Computing",
+    leadBackend: "Lead Back-end Engineer",
+    ledTeam: "Led a cross-functional team of back-end and front-end developers to design and build a secure, store-like software platform from scratch",
+    engineered: "Engineered a highly reliable solution pre-installed on all Thomson computers, with deep Windows integration",
+    implementedPipelines: "Implemented pipelines and automated deployment processes to ensure robustness, scalability, and security",
+    aiBackend: "AI Back-end Engineer",
     designed: "Designed and developed AI-based back-end solutions for clients such as Amadeus",
     contributed: "Contributed to the creation of innovative AI models and deployment pipelines",
     itConsultant: "IT Consultant & Freelance Developer",
@@ -143,7 +143,7 @@ const translations = {
   },
   fr: {
     // Hero section
-    student: "Étudiant en 4ème année d'Ingénierie Informatique à l'EPITA",
+    student: "Ingénieur Logiciel IA Back-end",
     specializing: "Spécialisé en Machine Learning & IA",
     // Education section
     education: "Formation",
@@ -152,12 +152,12 @@ const translations = {
     exchangeSemester: "Semestre d'échange académique",
     // Experience section
     experience: "Expérience Professionnelle",
-    ministry: "Ministère des Armées",
-    pfeeProject: "Projet PFEE – Développement d'un Pipeline de Données Multimodales",
-    pipeline: "Implémentation d'un pipeline pour générer et annoter des ensembles de données multimodales",
-    fineTuned:
-      "Fine-tuning et évaluation de modèles multimodaux, optimisation des hyperparamètres et évaluation des gains de performance",
-    aiBackend: "Ingénieur IA Back-end Stagiaire",
+    thomsonComputing: "Thomson Computing",
+    leadBackend: "Ingénieur Back-end Principal",
+    ledTeam: "Direction d'une équipe transfonctionnelle de développeurs back-end et front-end pour concevoir et construire une plateforme logicielle sécurisée de type store à partir de zéro",
+    engineered: "Conception d'une solution hautement fiable pré-installée sur tous les ordinateurs Thomson, avec une intégration Windows approfondie",
+    implementedPipelines: "Implémentation de pipelines et de processus de déploiement automatisés pour assurer la robustesse, l'évolutivité et la sécurité",
+    aiBackend: "Ingénieur IA Back-end",
     designed: "Conception et développement de solutions back-end basées sur l'IA pour des clients comme Amadeus",
     contributed: "Contribution à la création de modèles d'IA innovants et de pipelines de déploiement",
     itConsultant: "Consultant IT & Développeur Freelance",
@@ -493,18 +493,18 @@ export default function Portfolio() {
           <div className="space-y-8">
             {[
               {
-                company: t.ministry,
-                role: t.pfeeProject,
-                period: translateDate("February 2025 – Present"),
-                location: "France",
-                description: [t.pipeline, t.fineTuned],
+                company: t.thomsonComputing,
+                role: t.leadBackend,
+                period: translateDate("August 2025 – Present"),
+                location: "Paris, France",
+                description: [t.ledTeam, t.engineered, t.implementedPipelines],
                 icon: Building,
                 color: "purple",
               },
               {
                 company: "Xo7",
                 role: t.aiBackend,
-                period: translateDate("August 2024 – January 2025"),
+                period: translateDate("August 2024 – Present"),
                 location: "Paris, France",
                 description: [t.designed, t.contributed],
                 icon: Brain,

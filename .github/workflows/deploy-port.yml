@@ -21,7 +21,7 @@ jobs:
         git reset --hard origin/main
         git pull
         npm install --legacy-peer-deps
-        npm run export
+        npm run build
         sudo mkdir -p /var/www/privilegedlab.com/emre
         sudo rsync -av --delete ./out/ /var/www/privilegedlab.com/emre/
         sudo chown -R www-data:www-data /var/www/privilegedlab.com/emre/
