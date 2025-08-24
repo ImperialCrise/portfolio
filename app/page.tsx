@@ -96,6 +96,10 @@ const translations = {
     exchangeSemester: "Academic Exchange Semester",
     // Experience section
     experience: "Professional Experience",
+    ministry: "Ministry of the Armed Forces",
+    pfeeProject: "PFEE Project – Development of a Multimodal Data Pipeline",
+    pipeline: "Implemented a pipeline for generating and annotating multimodal datasets",
+    fineTuned: "Fine-tuned and benchmarked multimodal models, optimized hyperparameters, and evaluated performance gains",
     thomsonComputing: "Thomson Computing",
     leadBackend: "Lead Back-end Engineer",
     ledTeam: "Led a cross-functional team of back-end and front-end developers to design and build a secure, store-like software platform from scratch",
@@ -157,6 +161,10 @@ const translations = {
     exchangeSemester: "Semestre d'échange académique",
     // Experience section
     experience: "Expérience Professionnelle",
+    ministry: "Ministère des Armées",
+    pfeeProject: "Projet PFEE – Développement d'un Pipeline de Données Multimodales",
+    pipeline: "Implémentation d'un pipeline pour générer et annoter des ensembles de données multimodales",
+    fineTuned: "Fine-tuning et évaluation de modèles multimodaux, optimisation des hyperparamètres et évaluation des gains de performance",
     thomsonComputing: "Thomson Computing",
     leadBackend: "Ingénieur Back-end Principal",
     ledTeam: "Direction d'une équipe transfonctionnelle de développeurs back-end et front-end pour concevoir et construire une plateforme logicielle sécurisée de type store à partir de zéro",
@@ -521,13 +529,22 @@ export default function Portfolio() {
                 color: "pink",
               },
               {
+                company: t.ministry,
+                role: t.pfeeProject,
+                period: translateDate("February 2025 – Present"),
+                location: "France",
+                description: [t.pipeline, t.fineTuned],
+                icon: Building,
+                color: "purple",
+              },
+              {
                 company: "Xo7",
                 role: t.aiBackendIntern,
                 period: translateDate("September 2024 – January 2025"),
                 location: "Paris, France",
                 description: [t.historyRefactor, t.makefileCreation, t.asyncSystem, t.streamPublishing],
                 icon: Brain,
-                color: "purple",
+                color: "pink",
               },
               {
                 company: "Crystal",
@@ -536,7 +553,7 @@ export default function Portfolio() {
                 location: "Paris, France",
                 description: [t.delivered, t.optimized],
                 icon: Code,
-                color: "pink",
+                color: "purple",
               },
               {
                 company: "Swallis Medical",
@@ -545,7 +562,7 @@ export default function Portfolio() {
                 location: "Strasbourg, France",
                 description: [t.developed, t.participated],
                 icon: Building,
-                color: "purple",
+                color: "pink",
               },
             ].map((exp, index) => (
               <motion.div key={index} variants={fadeInUp}>
