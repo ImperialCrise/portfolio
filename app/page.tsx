@@ -536,7 +536,7 @@ export default function Portfolio() {
                 location: "Paris, France",
                 description: [t.delivered, t.optimized],
                 icon: Code,
-                color: "purple",
+                color: "pink",
               },
               {
                 company: "Swallis Medical",
@@ -545,7 +545,7 @@ export default function Portfolio() {
                 location: "Strasbourg, France",
                 description: [t.developed, t.participated],
                 icon: Building,
-                color: "pink",
+                color: "purple",
               },
             ].map((exp, index) => (
               <motion.div key={index} variants={fadeInUp}>
