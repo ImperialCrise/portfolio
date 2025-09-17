@@ -11,6 +11,43 @@ export default function EmonPage() {
   const [showContract, setShowContract] = useState(false)
   const [showRejection, setShowRejection] = useState(false)
   const [randomQuestionIndex, setRandomQuestionIndex] = useState(0)
+  const [rejectionCount, setRejectionCount] = useState(0)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [noButtonPos, setNoButtonPos] = useState({ x: 50, y: 50 })
+
+  useEffect(() => {
+    if (showRejection && rejectionCount > 0) {
+      const handleMouseMove = (e: MouseEvent) => {
+        setMousePos({ x: e.clientX, y: e.clientY })
+        
+        const buttonRect = document.getElementById('no-button')?.getBoundingClientRect()
+        if (buttonRect) {
+          const buttonCenterX = buttonRect.left + buttonRect.width / 2
+          const buttonCenterY = buttonRect.top + buttonRect.height / 2
+          
+          const distance = Math.sqrt(
+            Math.pow(e.clientX - buttonCenterX, 2) + Math.pow(e.clientY - buttonCenterY, 2)
+          )
+          
+          if (distance < 200) {
+            const angle = Math.atan2(buttonCenterY - e.clientY, buttonCenterX - e.clientX)
+            const speed = Math.max(5, 20 - distance / 10)
+            
+            let newX = noButtonPos.x + Math.cos(angle) * speed
+            let newY = noButtonPos.y + Math.sin(angle) * speed
+            
+            newX = Math.max(15, Math.min(85, newX))
+            newY = Math.max(15, Math.min(85, newY))
+            
+            setNoButtonPos({ x: newX, y: newY })
+          }
+        }
+      }
+
+      document.addEventListener('mousemove', handleMouseMove)
+      return () => document.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [showRejection, rejectionCount, noButtonPos.x, noButtonPos.y])
 
   const handleAuthSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -54,16 +91,21 @@ export default function EmonPage() {
     setShowRejection(true)
     setShowProposal(false)
     setShowCinematic(false)
+    setRejectionCount(0)
     setRandomQuestionIndex(Math.floor(Math.random() * randomQuestions.length))
   }
 
   const handleRejectionYes = () => {
     setShowContract(true)
     setShowRejection(false)
+    setNoButtonPos({ x: 50, y: 50 })
+    setRejectionCount(0)
   }
 
   const handleRejectionNo = () => {
+    setRejectionCount((prev: number) => prev + 1)
     setRandomQuestionIndex(Math.floor(Math.random() * randomQuestions.length))
+    setNoButtonPos({ x: 50, y: 50 })
   }
 
   const cinematicTexts = [
@@ -239,7 +281,7 @@ export default function EmonPage() {
 
   if (showRejection) {
     return (
-      <div className="min-h-screen bg-gray-400 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-400 flex items-center justify-center relative">
         <div className="text-center p-8">
           <div className="text-8xl mb-8">
             😭😭😭😭😭
@@ -251,13 +293,13 @@ export default function EmonPage() {
 
           <div className="bg-white/90 p-8 rounded-lg border-4 border-gray-500 shadow-2xl mb-8">
             <p className="text-2xl font-bold text-gray-600 mb-4">
-              Bon... une dernière question alors... 😢
+              {rejectionCount === 0 ? "Bon... une dernière question alors... 😢" : "Allez, encore une petite question... 🥺"}
             </p>
             <p className="text-xl text-gray-600 mb-6">
               {randomQuestions[randomQuestionIndex]}
             </p>
             
-            <div className="flex gap-6 justify-center">
+            <div className="flex gap-6 justify-center relative min-h-[100px]">
               <button
                 onClick={handleRejectionYes}
                 className="px-8 py-4 bg-green-500 text-white text-xl font-bold rounded-lg hover:bg-green-600 transform hover:scale-105 transition-all shadow-lg"
@@ -265,8 +307,17 @@ export default function EmonPage() {
                 OUI 💕
               </button>
               <button
+                id="no-button"
                 onClick={handleRejectionNo}
                 className="px-8 py-4 bg-gray-500 text-white text-xl font-bold rounded-lg hover:bg-gray-600 transform hover:scale-105 transition-all shadow-lg"
+                style={rejectionCount > 0 ? {
+                  position: 'fixed',
+                  left: `${noButtonPos.x}%`,
+                  top: `${noButtonPos.y}%`,
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: 1000,
+                  transition: 'all 0.3s ease-out'
+                } : {}}
               >
                 NON 😐
               </button>
@@ -274,7 +325,7 @@ export default function EmonPage() {
           </div>
 
           <p className="text-lg text-gray-600">
-            (Pssst... tu peux dire "oui" si tu changes d'avis... 🥺)
+            {rejectionCount > 0 ? "(Le bouton NON essaie de t'échapper... 😏)" : "(Pssst... tu peux dire \"oui\" si tu changes d'avis... 🥺)"}
           </p>
         </div>
       </div>
