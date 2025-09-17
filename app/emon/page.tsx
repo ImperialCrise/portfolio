@@ -296,9 +296,7 @@ export default function EmonPage() {
         
         {/* Music control hint */}
         <div className="absolute top-4 left-4 bg-white/80 backdrop-blur-sm px-3 py-2 rounded-lg shadow-lg z-50">
-          <p className="text-sm text-gray-600 flex items-center gap-2">
-            🎵 <span>Musique de mariage en cours...</span>
-          </p>
+         
         </div>
 
         {/* Celebration confetti */}
