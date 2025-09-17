@@ -8,11 +8,9 @@ export default function EmonPage() {
   const [showCinematic, setShowCinematic] = useState(false)
   const [cinematicStep, setCinematicStep] = useState(0)
   const [showProposal, setShowProposal] = useState(false)
-  const [proposalAnswer, setProposalAnswer] = useState('')
-  const [showWedding, setShowWedding] = useState(false)
+  const [showContract, setShowContract] = useState(false)
   const [showRejection, setShowRejection] = useState(false)
   const [randomQuestionIndex, setRandomQuestionIndex] = useState(0)
-  const [rejectionAnswer, setRejectionAnswer] = useState('')
 
   const handleAuthSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -44,27 +42,24 @@ export default function EmonPage() {
     }, 2000)
   }
 
-  const handleProposalSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (proposalAnswer.toLowerCase() === 'oui') {
-      setShowWedding(true)
-      setShowProposal(false)
-    } else if (proposalAnswer.toLowerCase() === 'non') {
-      setShowRejection(true)
-      setShowProposal(false)
-      setRandomQuestionIndex(Math.floor(Math.random() * randomQuestions.length))
-    }
+  const handleProposalYes = () => {
+    setShowContract(true)
+    setShowProposal(false)
   }
 
-  const handleRejectionSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (rejectionAnswer.toLowerCase() === 'oui') {
-      setShowWedding(true)
-      setShowRejection(false)
-    } else {
-      setRandomQuestionIndex(Math.floor(Math.random() * randomQuestions.length))
-      setRejectionAnswer('')
-    }
+  const handleProposalNo = () => {
+    setShowRejection(true)
+    setShowProposal(false)
+    setRandomQuestionIndex(Math.floor(Math.random() * randomQuestions.length))
+  }
+
+  const handleRejectionYes = () => {
+    setShowContract(true)
+    setShowRejection(false)
+  }
+
+  const handleRejectionNo = () => {
+    setRandomQuestionIndex(Math.floor(Math.random() * randomQuestions.length))
   }
 
   const cinematicTexts = [
@@ -186,21 +181,20 @@ export default function EmonPage() {
               VEUX-TU M'ÉPOUSER ?
             </h3>
             
-            <form onSubmit={handleProposalSubmit} className="text-center">
-              <input
-                type="text"
-                value={proposalAnswer}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProposalAnswer(e.target.value)}
-                className="px-6 py-3 text-2xl border-4 border-red-400 rounded-lg focus:outline-none focus:border-red-600 mb-4"
-                placeholder="OUI ou NON ?"
-              />
+            <div className="flex gap-8 justify-center">
               <button
-                type="submit"
-                className="block mx-auto px-8 py-4 bg-red-500 text-white text-xl rounded-lg hover:bg-red-600 transform hover:scale-110 transition-all animate-pulse"
+                onClick={handleProposalYes}
+                className="px-12 py-6 bg-green-500 text-white text-3xl font-bold rounded-lg hover:bg-green-600 transform hover:scale-110 transition-all animate-pulse shadow-lg"
               >
-                RÉPONDRE
+                OUI !! 💍
               </button>
-            </form>
+              <button
+                onClick={handleProposalNo}
+                className="px-12 py-6 bg-red-500 text-white text-3xl font-bold rounded-lg hover:bg-red-600 transform hover:scale-110 transition-all shadow-lg"
+              >
+                NON 😔
+              </button>
+            </div>
           </div>
         </div>
 
@@ -259,21 +253,20 @@ export default function EmonPage() {
               {randomQuestions[randomQuestionIndex]}
             </p>
             
-            <form onSubmit={handleRejectionSubmit} className="text-center">
-              <input
-                type="text"
-                value={rejectionAnswer}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRejectionAnswer(e.target.value)}
-                className="px-4 py-2 text-lg border-2 border-gray-400 rounded-lg focus:outline-none focus:border-gray-600 mb-4"
-                placeholder="Ta réponse..."
-              />
+            <div className="flex gap-6 justify-center">
               <button
-                type="submit"
-                className="block mx-auto px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+                onClick={handleRejectionYes}
+                className="px-8 py-4 bg-green-500 text-white text-xl font-bold rounded-lg hover:bg-green-600 transform hover:scale-105 transition-all shadow-lg"
               >
-                RÉPONDRE
+                OUI 💕
               </button>
-            </form>
+              <button
+                onClick={handleRejectionNo}
+                className="px-8 py-4 bg-gray-500 text-white text-xl font-bold rounded-lg hover:bg-gray-600 transform hover:scale-105 transition-all shadow-lg"
+              >
+                NON 😐
+              </button>
+            </div>
           </div>
 
           <p className="text-lg text-gray-600">
@@ -284,75 +277,113 @@ export default function EmonPage() {
     )
   }
 
-  if (showWedding) {
+  if (showContract) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-yellow-200 via-pink-200 to-purple-300 overflow-hidden relative">
-        {/* Wedding confetti */}
-        {[...Array(50)].map((_, i) => (
+      <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-white to-yellow-100 flex items-center justify-center p-8">
+        {/* Hidden YouTube video for wedding music */}
+        <iframe
+          src="https://www.youtube.com/embed/IWgcqu4gKwQ?autoplay=1&loop=1&playlist=IWgcqu4gKwQ&controls=0&showinfo=0&rel=0&modestbranding=1&mute=0"
+          allow="autoplay; encrypted-media"
+          className="absolute -left-[9999px] opacity-0 pointer-events-none"
+          width="1"
+          height="1"
+          title="Wedding Music"
+        />
+        
+        {/* Music control hint */}
+        <div className="absolute top-4 left-4 bg-white/80 backdrop-blur-sm px-3 py-2 rounded-lg shadow-lg z-50">
+          <p className="text-sm text-gray-600 flex items-center gap-2">
+            🎵 <span>Musique de mariage en cours...</span>
+          </p>
+        </div>
+
+        {/* Celebration confetti */}
+        {[...Array(30)].map((_, i) => (
           <div
             key={i}
-            className="absolute text-4xl animate-fall pointer-events-none"
+            className="absolute text-3xl animate-fall pointer-events-none"
             style={{
               left: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${2 + Math.random() * 3}s`,
+              animationDuration: `${3 + Math.random() * 4}s`,
             }}
           >
-            {['🎉', '🎊', '💐', '💒', '👰', '🤵', '💍', '🥂'][Math.floor(Math.random() * 8)]}
+            {['🎉', '🎊', '💐', '💍', '❤️'][Math.floor(Math.random() * 5)]}
           </div>
         ))}
 
-        <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-8">
-          <h1 className="text-9xl font-black text-pink-600 mb-4 text-center animate-bounce">
-            OUIIIII !! 
-          </h1>
-          
-          <h2 className="text-6xl font-bold text-purple-600 mb-8 text-center animate-pulse">
-            TU AS DIT OUI !!!
-          </h2>
-
-          <div className="text-9xl mb-8 animate-spin">
-            💍
-          </div>
-
-          <div className="text-8xl mb-8 animate-heartbeat">
-            👰‍♀️❤️🤵‍♂️
-          </div>
-
-          <div className="bg-white/95 p-8 rounded-lg border-4 border-pink-500 shadow-2xl transform animate-bounce mb-8">
-            <h3 className="text-4xl font-bold text-pink-600 text-center mb-4">
-              NOUS SOMMES MARIÉS !
-            </h3>
-            <p className="text-2xl text-pink-500 text-center">
-              JE T'AIME POUR TOUJOURS ET À JAMAIS ! 💕
+        <div className="bg-white border-8 border-gold shadow-2xl max-w-4xl w-full p-12 text-center relative" style={{borderColor: '#FFD700'}}>
+          {/* Header */}
+          <div className="border-b-4 border-gold pb-6 mb-8" style={{borderColor: '#FFD700'}}>
+            <h1 className="text-5xl font-serif font-bold text-gray-800 mb-2">
+              CONTRAT DE MARIAGE
+            </h1>
+            <p className="text-xl text-gray-600 font-serif">
+              Certificat Officiel d'Union
             </p>
           </div>
 
-          {/* Wedding messages */}
-          <div className="absolute top-20 left-10 transform rotate-12 bg-yellow-200 p-4 rounded-lg border-4 border-pink-500 shadow-lg animate-bounce">
-            <p className="text-xl font-bold text-pink-700">ENFIN !</p>
+          {/* Content */}
+          <div className="space-y-8 text-left">
+            <p className="text-2xl leading-relaxed font-serif text-gray-700">
+              Par la présente, nous certifions que
+            </p>
+
+            <div className="bg-pink-50 border-4 border-pink-300 p-6 rounded-lg">
+              <h2 className="text-4xl font-bold text-center text-pink-600 mb-4">
+                EMRE ❤️ EMON
+              </h2>
+              <p className="text-xl text-center text-pink-500 font-serif">
+                sont officiellement unis par les liens sacrés du mariage
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-8 my-8">
+              <div className="text-center">
+                <p className="text-lg font-serif text-gray-600 mb-2">Époux</p>
+                <div className="border-b-2 border-gray-400 pb-2">
+                  <p className="text-2xl font-bold text-gray-800">EMRE</p>
+                </div>
+                <p className="text-sm text-gray-500 mt-2">Signature</p>
+              </div>
+              <div className="text-center">
+                <p className="text-lg font-serif text-gray-600 mb-2">Époux</p>
+                <div className="border-b-2 border-gray-400 pb-2">
+                  <p className="text-2xl font-bold text-gray-800">EMON</p>
+                </div>
+                <p className="text-sm text-gray-500 mt-2">Signature</p>
+              </div>
+            </div>
+
+            <div className="text-center space-y-4">
+              <p className="text-lg font-serif text-gray-700">
+                Cette union est scellée avec amour et tendresse
+              </p>
+              <p className="text-2xl text-red-500 font-bold">
+                POUR TOUJOURS ET À JAMAIS 💕
+              </p>
+            </div>
+
+            <div className="bg-gray-100 p-4 rounded-lg">
+              <p className="text-sm text-gray-600 font-serif text-center">
+                Date: {new Date().toLocaleDateString('fr-FR')}
+              </p>
+              <p className="text-sm text-gray-600 font-serif text-center mt-2">
+                Lieu: Dans nos cœurs 💖
+              </p>
+            </div>
           </div>
 
-          <div className="absolute top-40 right-20 transform -rotate-6 bg-pink-100 p-4 rounded-lg border-4 border-purple-500 shadow-lg animate-pulse">
-            <p className="text-lg font-bold text-purple-600">MON CŒUR !</p>
+          {/* Official stamp */}
+          <div className="absolute -top-4 -right-4 bg-red-500 text-white px-4 py-2 rounded-full transform rotate-12 animate-pulse">
+            <p className="text-lg font-bold">OFFICIEL</p>
           </div>
 
-          <div className="absolute bottom-32 left-20 transform rotate-6 bg-purple-200 p-4 rounded-lg border-4 border-pink-600 shadow-lg animate-spin">
-            <p className="text-lg font-bold text-purple-700">POUR TOUJOURS</p>
-          </div>
-
-          <div className="absolute bottom-20 right-10 transform -rotate-12 bg-red-100 p-4 rounded-lg border-4 border-red-500 shadow-lg animate-bounce">
-            <p className="text-md font-bold text-red-600">JE T'AIME !</p>
-          </div>
-
-          <div className="absolute top-1/2 left-5 transform rotate-45 bg-orange-200 p-3 rounded-lg border-3 border-orange-500 shadow-lg animate-pulse">
-            <p className="text-sm font-bold text-orange-700">MA VIE</p>
-          </div>
-
-          <div className="absolute top-1/3 right-5 transform -rotate-45 bg-green-200 p-3 rounded-lg border-3 border-green-500 shadow-lg animate-bounce">
-            <p className="text-sm font-bold text-green-700">MON AMOUR</p>
-          </div>
-
+          {/* Love decorations */}
+          <div className="absolute top-4 left-4 text-4xl animate-heartbeat">💍</div>
+          <div className="absolute top-4 right-16 text-4xl animate-heartbeat">💍</div>
+          <div className="absolute bottom-4 left-4 text-4xl animate-spin">❤️</div>
+          <div className="absolute bottom-4 right-4 text-4xl animate-spin">❤️</div>
         </div>
 
         {/* CSS for animations */}
@@ -364,13 +395,13 @@ export default function EmonPage() {
             }
             to {
               transform: translateY(100vh) rotate(720deg);
-              opacity: 0.5;
+              opacity: 0.3;
             }
           }
           
           @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.1); }
           }
           
           .animate-fall {
@@ -378,7 +409,7 @@ export default function EmonPage() {
           }
           
           .animate-heartbeat {
-            animation: heartbeat 1.5s ease-in-out infinite;
+            animation: heartbeat 2s ease-in-out infinite;
           }
         `}</style>
       </div>
