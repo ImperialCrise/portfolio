@@ -43,13 +43,17 @@ export default function EmonPage() {
   }
 
   const handleProposalYes = () => {
+    console.log('handleProposalYes')
     setShowContract(true)
     setShowProposal(false)
+    setShowCinematic(false)
   }
 
   const handleProposalNo = () => {
+    console.log('handleProposalNo')
     setShowRejection(true)
     setShowProposal(false)
+    setShowCinematic(false)
     setRandomQuestionIndex(Math.floor(Math.random() * randomQuestions.length))
   }
 
